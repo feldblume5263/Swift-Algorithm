@@ -7,16 +7,17 @@
 
 import Foundation
 
-func swap(a: inout Double, b: inout Double) {
+func swap<Something>(a: inout Something , b: inout Something) {
     let temp = a
     
     a = b
     b = temp
 }
 
-func swap(a: inout Int, b: inout Int) {
-    let temp = a
-    
-    a = b
-    b = temp
-}
+
+var varA = "I'm A"
+var varB = "I'm B"
+
+swap(a: &varA, b: &varB)
+
+print(varA, varB)
