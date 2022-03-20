@@ -7,17 +7,50 @@
 
 import Foundation
 
-func swap<Something>(a: inout Something , b: inout Something) {
-    let temp = a
-    
-    a = b
-    b = temp
+//func address(of object: UnsafeRawPointer) -> String{
+//    let address = Int(bitPattern: object)
+//    return String(format: "%p", address)
+//}
+//
+//func swapTwoValues<T>(a: inout T, b: inout T) {
+//    var temporaryA = a
+//    print("In Function")
+//    print("------------")
+//    print("a:", address(of: &a))
+//    print("temp:", address(of: &temporaryA))
+//    a = b
+//    print("a:", address(of: &a))
+//    print("b:", address(of: &b))
+//    b = temporaryA
+//    print("b:", address(of: &b))
+//    print("temp:", address(of: &temporaryA))
+//    print("------------")
+//}
+//
+//
+//
+//var a = "abc"
+//var b = "cde"
+//print("Before call function")
+//print("------------")
+//print("a: ", address(of: &a))
+//print("b: ", address(of: &b))
+//print("------------")
+//swapTwoValues(a: &a, b: &b)
+//print("After call function")
+//print("------------")
+//print("a: ", address(of: &a))
+//print("b: ", address(of: &b))
+//print("------------")
+
+
+func findStringIndex<T>(array: [T], valueToFind: T) -> Int? {
+    for (index, value) in array.enumerated() {
+        if value == valueToFind {
+            return index
+        }
+    }
+    return nil
 }
 
-
-var varA = "I'm A"
-var varB = "I'm B"
-
-swap(a: &varA, b: &varB)
-
-print(varA, varB)
+print(findStringIndex(array: ["aa", "bc", "de", "fgh"], valueToFind: "a"))
