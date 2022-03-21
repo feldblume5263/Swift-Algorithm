@@ -42,9 +42,10 @@ import Foundation
 //print("a: ", address(of: &a))
 //print("b: ", address(of: &b))
 //print("------------")
+//
 
 
-func findStringIndex<T>(array: [T], valueToFind: T) -> Int? {
+func findStringIndex<T: Equatable>(of valueToFind: T, array: [T]) -> Int? {
     for (index, value) in array.enumerated() {
         if value == valueToFind {
             return index
@@ -53,4 +54,4 @@ func findStringIndex<T>(array: [T], valueToFind: T) -> Int? {
     return nil
 }
 
-print(findStringIndex(array: ["aa", "bc", "de", "fgh"], valueToFind: "a"))
+print(findStringIndex(of: "bc", array: ["aa", "bc", "de", "fgh"]))
