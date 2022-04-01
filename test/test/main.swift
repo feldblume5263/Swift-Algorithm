@@ -45,13 +45,63 @@ import Foundation
 //
 
 
-func findStringIndex<T: Equatable>(of valueToFind: T, array: [T]) -> Int? {
-    for (index, value) in array.enumerated() {
-        if value == valueToFind {
-            return index
+//func findStringIndex<T: Equatable>(of valueToFind: T, array: [T]) -> Int? {
+//    for (index, value) in array.enumerated() {
+//        if value == valueToFind {
+//            return index
+//        }
+//    }
+//    return nil
+//}
+//
+//print(findStringIndex(of: "bc", array: ["aa", "bc", "de", "fgh"]) ?? "no value")
+//
+//
+//
+//
+//func multipleAnything<T>(hls: T, rhs: T) -> T where T: BinaryFloatingPoint {
+//    return hls * rhs
+//}
+//
+//print(multipleAnything(hls: 3.8, rhs: 3.5))
+//print(multipleAnything(hls: 3, rhs: 3))
+//
+//infix operator **: MultiplicationPrecedence
+//
+//func **<T>(hls: T, rhs: T) -> T where T: BinaryFloatingPoint {
+//    return hls * rhs
+//}
+//
+//
+//print(3.8 ** 3.5)
+
+
+import SwiftUI
+
+class EscapingViewModel: ObservableObject {
+    @Published var text: String = "안녕하세요"
+    
+    func getData() {
+        let newData = downloadData()
+        
+        text = newData
+    }
+    
+    func downloadData() -> String {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            return "놔스닥입니다."
         }
     }
-    return nil
 }
-
-print(findStringIndex(of: "bc", array: ["aa", "bc", "de", "fgh"]))
+struct EscapingView: View {
+    @StateObject var ViewModel = EscapingViewModel()
+    
+    var body: some View {
+        Text(ViewModel.text)
+            .font(Font.largeTitle.bold())
+            .foregroundColor(.yellow)
+            .onTapGesture {
+                ViewModel.getData()
+            }
+    }
+}
