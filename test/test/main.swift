@@ -76,32 +76,66 @@ import Foundation
 //print(3.8 ** 3.5)
 
 
-import SwiftUI
+//import SwiftUI
+//
+//class EscapingViewModel: ObservableObject {
+//    @Published var text: String = "안녕하세요"
+//
+//    func getData() {
+//        let newData = downloadData2()
+//
+//        text = newData
+//    }
+//
+//    func downloadData() -> String {
+//        return "놔스닥입니다."
+//    }
+//
+//    func downloadData2() -> String {
+//        return "놔스닥입니다."
+//    }
+//}
+//
+//struct EscapingView: View {
+//    @StateObject var ViewModel = EscapingViewModel()
+//
+//    var body: some View {
+//        Text(ViewModel.text)
+//            .font(Font.largeTitle.bold())
+//            .foregroundColor(.yellow)
+//            .onTapGesture {
+//                ViewModel.getData()
+//            }
+//    }
+//}
 
-class EscapingViewModel: ObservableObject {
-    @Published var text: String = "안녕하세요"
+var completionHandler: [() -> Void] = []
+
+class MyClass {
+    var x = 10
     
-    func getData() {
-        let newData = downloadData()
+    func callFunc() {
+//        withoutEscaping { x = 200 }
+        withEscaping { self.x = 100 }
         
-        text = newData
     }
     
-    func downloadData() -> String {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            return "놔스닥입니다."
-        }
-    }
-}
-struct EscapingView: View {
-    @StateObject var ViewModel = EscapingViewModel()
+    var completionHandlers: [() -> Void] = []
     
-    var body: some View {
-        Text(ViewModel.text)
-            .font(Font.largeTitle.bold())
-            .foregroundColor(.yellow)
-            .onTapGesture {
-                ViewModel.getData()
-            }
+    func withEscaping(completion: @escaping () -> Void) {
+        completionHandler.append(completion)
+    }
+    
+    func withoutEscaping(completion: () -> Void) {
+        completion()
     }
 }
+
+
+let mc = MyClass()
+
+mc.callFunc()
+print(mc.x)     // 200
+
+mc.completionHandlers.first?()
+print(mc.x)    // 100
